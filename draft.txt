@@ -1,0 +1,16 @@
+java -Dlog4j.configuration=file:"./log.properties"  -jar lauda-assembly-0.1-SNAPSHOT.jar \
+--source-url "jdbc:oracle:thin:@172.26.112.61:1521/pdwh0" \
+--source-username C_KERTI \
+--source-password C2018Kerti \
+--source-table  C_KERTI.DROPME \
+--target-table  UTIL.LAUDA_TARGET \
+--target-url "172.26.112.42:1521/pdwh0" \
+--target-username util \
+--target-password util \
+--create \
+--create-options "parallel nologging compress" \
+--path "/u02/lauda/data" \
+--parallel 40 \
+--batch-size 100000 \
+--select-hint "parallel(16)" \
+--environment "PATH=/u01/app/oracle/product/11.2.0.4/dbhome_1/bin;ORACLE_HOME=/u01/app/oracle/product/11.2.0.4/dbhome_1;ORACLE_SID=PDWH01;ORACLE_UNQNAME=PDWH0"
