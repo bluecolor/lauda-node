@@ -1,7 +1,10 @@
+let em = require('./events')
 let connector = require('./connector')
 let options = require('./options')
 let Table = require('./table')
 let Column = require('./column')
+let constants = require('./constants')
+let extractor = require('./extractor')
 
 let name = options.sourceTable
 let url = options.sourceUrl
@@ -52,10 +55,20 @@ promise = promise.then(({ranges, source}) => {
   console.log(target.name)
   console.log(ranges)
 
-  let range = ranges[0]
-  let filters = [`rowid between '${range[0]}' and '${range[1]}'`]
-  let file = `${options.path}/0.txt`
-  require('./extractor').extract(source, {filters, file})
+  let recordDelimiter = options.recordDelimiter || constants.RECORD_DELIMITER
+  let fieldDelimiter = options.fieldDelimiter || constants.FIELD_DELIMITER
+
+  let total = 0
+  em.global.on('child-write-done', (c) => {
+    total += c
+    console.log(`child-write-done -> ${c} : ${total}`)
+  })
+
+  ranges.forEach( (range, index) => {
+    let file = `${options.path}/${index}.txt`
+    let filters = [`rowid between '${range[0]}' and '${range[1]}'`]
+    extractor.extract(source, {filters, file, recordDelimiter, fieldDelimiter})
+  })
 })
 
 

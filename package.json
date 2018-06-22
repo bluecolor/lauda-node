@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cli-progress": "^2.0.0",
     "oracledb": "^2.3.0",
     "yargs": "^11.0.0"
   }

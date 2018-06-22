@@ -2,6 +2,9 @@ let db = require('oracledb')
 
 module.exports = {
 
+  RECORD_DELIMITER: '\n',
+  FIELD_DELIMITER: ';',
+
   getColumnTypeName (dbType) {
     switch (dbType) {
       case db.DB_TYPE_BINARY_DOUBLE :	return 'BINARY_DOUBLE'

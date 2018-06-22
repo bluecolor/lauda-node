@@ -13,4 +13,4 @@ node src/app.js \
 --target-password lauda \
 --create \
 --path "/home/ceyhun/projects/lab/lauda/test/data" \
---parallel 4
+--parallel 2
